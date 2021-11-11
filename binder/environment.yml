@@ -1,8 +1,8 @@
 name: jupyternotebooks
-channels: 
+channels:
   - defaults
   - conda-forge
-dependencies:	
+dependencies:
   - python
   - jupyter
   - ipython
