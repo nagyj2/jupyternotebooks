@@ -1,12 +1,12 @@
 name: jupyternotebooks
 channels: 
-	- defaults
-	- conda-forge
+  - defaults
+  - conda-forge
 dependencies:	
-	- python
-	- jupyter
-	- ipython
-	- node
-	- pip
-	- pip:
-		build
+  - python
+  - jupyter
+  - ipython
+  - node
+  - pip
+  - pip:
+    build
