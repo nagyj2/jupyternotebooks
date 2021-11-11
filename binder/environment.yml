@@ -9,4 +9,4 @@ dependencies:
   - node
   - pip
   - pip:
-    build
+    - build
