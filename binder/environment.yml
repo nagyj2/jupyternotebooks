@@ -6,7 +6,6 @@ dependencies:
   - python
   - jupyter
   - ipython
-  - nodejs=10.24
   - pip
   - pip:
     - build
