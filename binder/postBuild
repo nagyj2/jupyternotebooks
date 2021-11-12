@@ -2,8 +2,7 @@
 
 git clone https://gitlab.cas.mcmaster.ca/nagyj2/unicode-snippets-ts
 
-cd unicode-snippets-ts
+mv unicode-snippets-ts/* ./
+rm unicode-snippets-ts -rf
 
 ./install.sh
-
-cd ../
