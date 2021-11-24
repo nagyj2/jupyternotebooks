@@ -1,8 +1,46 @@
 #!/bin/bash
 
-git clone https://gitlab.cas.mcmaster.ca/nagyj2/unicode-snippets-ts
+set -e
 
-mv unicode-snippets-ts/* ./
-rm unicode-snippets-ts -rf
+echo "Looking for jlpm..."
+if ! command -v jlpm
+then
+	echo "jlpm not found"
+	exit 1
+fi
 
-./install.sh
+if ! [  -d "unicode-snippets-ts" ]
+then
+	echo "Cloning unicode-snippets-ts..."
+	git clone https://gitlab.cas.mcmaster.ca/nagyj2/unicode-snippets-ts
+fi
+cd ./unicode-snippets-ts/
+
+echo "Working from $(pwd)"
+
+# Install dependencies
+echo "Installing dependencies..."
+jlpm
+
+# Move node modules to the folder where they are needed
+# mkdir -p ./unicode-snippets-ts/node_modules/
+# mv ./node_modules/* ./unicode-snippets-ts/node_modules/
+
+if ! pip3 list | grep -F "build" 
+then
+	echo "Installing build pip package..."
+	pip3 install build
+fi
+
+pip3 uninstall unicode-snippets-ts -y
+
+echo "Fixing codeeditor..."
+sed -i '47s/.*/    interface ICoordinate extends JSONObject {/' ./node_modules/@jupyterlab/codeeditor/lib/editor.d.ts
+jlpm build:prod
+
+echo "Building pip wheel..."
+python3 ./gen_settings.py
+python3 -m build --wheel
+
+echo "installing wheel..."
+pip3 install dist/unicode_snippets_ts-0.1.0-py3-none-any.whl
